@@ -4,3 +4,8 @@ main: com.xariyx.simplemsg.Main
 api-version: 1.16
 authors: [ Xariyx ]
 description: Simple /msg and /r plugin
+commands:
+  replay:
+    alliasses: [r, rep]
+  message:
+    alliasses: [msg, m]

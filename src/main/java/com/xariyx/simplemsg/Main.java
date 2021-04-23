@@ -25,12 +25,15 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         createCustomConfig();
-
+        registerCommands();
+        registerListeners();
     }
+
+
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+
     }
 
 
@@ -50,6 +53,11 @@ public final class Main extends JavaPlugin {
             party.setExecutor(commandExecutor);
         }
     }
+
+    private void registerListeners() {
+        registerListener(new LeaveListener(this));
+    }
+
 
     private void registerListener(Listener listener) {
         getServer().getPluginManager().registerEvents(listener, this);
