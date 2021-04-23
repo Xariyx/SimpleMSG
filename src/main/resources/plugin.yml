@@ -1,0 +1,6 @@
+name: SimpleMSG
+version: ${project.version}
+main: com.xariyx.simplemsg.Main
+api-version: 1.16
+authors: [ Xariyx ]
+description: Simple /msg and /r plugin

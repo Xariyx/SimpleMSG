@@ -1,0 +1,6 @@
+msg:
+  help: "&6TODO"
+  playerOffline: "&4%player% is currently offline"
+  selfMessage: "&4You can't send message to yourself, you can just think about it in your head"
+  message: "&6%player% &2has sent you a message: &7%message%"
+  noReply: "&4You don't have anyone to reply to!"
