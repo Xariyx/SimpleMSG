@@ -13,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -101,13 +102,23 @@ public final class Main extends JavaPlugin {
     }
 
     public boolean removeReplyValue(Player playerToRemove) {
+
+        replayList.remove(playerToRemove);
+
         try {
+            ArrayList<Player> playersToRemove = new ArrayList<>();
             replayList.forEach((key, value) -> {
                         if (value == playerToRemove) {
-                            replayList.remove(key);
+                            playersToRemove.add(key);
                         }
                     }
             );
+
+            for (Player player :
+                    playersToRemove) {
+                replayList.remove(player);
+            }
+
         } catch (
                 NullPointerException ignored) {
             return false;
