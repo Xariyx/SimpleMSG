@@ -1,5 +1,6 @@
 msg:
-  help: "&6TODO"
+  msgHelp: "&6Correct usage: &7/msg &3PLAYER &2MESSAGE"
+  rHelp: "&6Correct usage: &7/r &2MESSAGE"
   playerOffline: "&4%player% is currently offline"
   selfMessage: "&4You can't send message to yourself, you can just think about it in your head"
   message: "&6%player% &2has sent you a message: &7%message%"

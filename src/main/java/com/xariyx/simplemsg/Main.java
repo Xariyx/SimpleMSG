@@ -13,14 +13,21 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public final class Main extends JavaPlugin {
 
     Map<Player, Player> replayList = new HashMap<>();
+
+
+
     private FileConfiguration messages;
+    private MSGLog msgLog;
 
 
     @Override
@@ -28,8 +35,37 @@ public final class Main extends JavaPlugin {
         createCustomConfig();
         registerCommands();
         registerListeners();
+        try {
+            createLogFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    private void createLogFile() throws IOException {
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Date date = new Date();
+        File dataFolder = new File(this.getDataFolder().getAbsolutePath()+"\\logs\\"+dateFormat.format(date) +".log");
+
+        try {
+            boolean isCreated = dataFolder.createNewFile();
+            if(isCreated){
+                System.out.println("File "+ dataFolder.getAbsolutePath() +" was created");
+            }
+            else{
+                System.out.println("There was a problem creating Log File," +
+                        " shutting down plugin, consider starting server with root permissions.");
+                System.exit(0);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        this.msgLog = new MSGLog(dataFolder);
+
+
+    }
 
 
     @Override
@@ -43,8 +79,8 @@ public final class Main extends JavaPlugin {
     }
 
     private void registerCommands() {
-        registerCommand("message", new MessageCommand(this));
-        registerCommand("replay", new ReplayCommand(this));
+        registerCommand("msg", new MessageCommand(this));
+        registerCommand("r", new ReplayCommand(this));
     }
 
 
@@ -140,4 +176,7 @@ public final class Main extends JavaPlugin {
     }
 
 
+    public MSGLog getMSGLog() {
+        return msgLog;
+    }
 }

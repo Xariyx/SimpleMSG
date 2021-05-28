@@ -6,14 +6,18 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.IOException;
+
 public class ReplayCommand implements CommandExecutor {
 
     FileConfiguration messages;
     Main main;
+    MSGLog log;
 
     public ReplayCommand(Main main) {
         this.messages = main.getMessages();
         this.main = main;
+        this.log = main.getMSGLog();
     }
 
     @Override
@@ -24,7 +28,7 @@ public class ReplayCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length < 1) {
-            player.sendMessage(main.color(messages.getString("msg.help")));
+            player.sendMessage(main.color(messages.getString("msg.rHelp")));
             return true;
         }
 
@@ -52,6 +56,13 @@ public class ReplayCommand implements CommandExecutor {
                 .replace("%message%", message)
                 .replace("%player%", player.getName())
         );
+
+        try {
+            log.addLogToFile(player, playerToSendMessage, message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         return (main.addReply(player, playerToSendMessage)
                 && main.addReply(playerToSendMessage, player));

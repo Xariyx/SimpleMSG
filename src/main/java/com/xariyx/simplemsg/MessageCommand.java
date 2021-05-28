@@ -6,14 +6,18 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.IOException;
+
 public class MessageCommand implements CommandExecutor {
 
     FileConfiguration messages;
     Main main;
+    MSGLog log;
 
     public MessageCommand(Main main) {
         this.messages = main.getMessages();
         this.main = main;
+        this.log = main.getMSGLog();
     }
 
     @Override
@@ -24,7 +28,7 @@ public class MessageCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length < 2) {
-            player.sendMessage(main.color(messages.getString("msg.help")));
+            player.sendMessage(main.color(messages.getString("msg.msgHelp")));
             return true;
         }
 
@@ -54,6 +58,12 @@ public class MessageCommand implements CommandExecutor {
                 .replace("%message%", message)
                 .replace("%player%", player.getName())
         );
+
+        try {
+            log.addLogToFile(player, playerToSendMessage, message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return (main.addReply(player, playerToSendMessage)
                 && main.addReply(playerToSendMessage, player));

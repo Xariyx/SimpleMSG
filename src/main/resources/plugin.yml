@@ -6,6 +6,6 @@ authors: [ Xariyx ]
 description: Simple /msg and /r plugin
 commands:
   r:
-    alliasses: [r, replay, rep]
+    alliasses: [r, reply, rep]
   msg:
     alliasses: [msg, tell, message, m]
